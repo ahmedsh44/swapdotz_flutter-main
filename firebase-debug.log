@@ -1,0 +1,51 @@
+[debug] [2025-09-13T19:49:02.499Z] ----------------------------------------------------------------------
+[debug] [2025-09-13T19:49:02.514Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\tasne\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2025-09-13T19:49:02.514Z] CLI Version:   14.16.0
+[debug] [2025-09-13T19:49:02.514Z] Platform:      win32
+[debug] [2025-09-13T19:49:02.514Z] Node Version:  v22.19.0
+[debug] [2025-09-13T19:49:02.515Z] Time:          Sat Sep 13 2025 22:49:02 GMT+0300 (Eastern European Summer Time)
+[debug] [2025-09-13T19:49:02.515Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-09-13T19:49:03.096Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-09-13T19:49:03.096Z] > authorizing via signed-in user (ahmedshafik445599@gmail.com)
+[debug] [2025-09-13T19:49:03.097Z] [iam] checking project swapdotz for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-09-13T19:49:03.098Z] Checked if tokens are valid: true, expires at: 1757795778368
+[debug] [2025-09-13T19:49:03.098Z] Checked if tokens are valid: true, expires at: 1757795778368
+[debug] [2025-09-13T19:49:03.100Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/swapdotz:testIamPermissions [none]
+[debug] [2025-09-13T19:49:03.100Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/swapdotz:testIamPermissions x-goog-quota-user=projects/swapdotz
+[debug] [2025-09-13T19:49:03.100Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/swapdotz:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-09-13T19:58:25.875Z] ----------------------------------------------------------------------
+[debug] [2025-09-13T19:58:25.885Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\tasne\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2025-09-13T19:58:25.885Z] CLI Version:   14.16.0
+[debug] [2025-09-13T19:58:25.886Z] Platform:      win32
+[debug] [2025-09-13T19:58:25.886Z] Node Version:  v22.19.0
+[debug] [2025-09-13T19:58:25.886Z] Time:          Sat Sep 13 2025 22:58:25 GMT+0300 (Eastern European Summer Time)
+[debug] [2025-09-13T19:58:25.886Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-09-13T19:58:26.125Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-09-13T19:58:26.125Z] > authorizing via signed-in user (ahmedshafik445599@gmail.com)
+[debug] [2025-09-13T19:58:26.125Z] [iam] checking project swapdotz for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-09-13T19:58:26.126Z] Checked if tokens are valid: true, expires at: 1757795778368
+[debug] [2025-09-13T19:58:26.127Z] Checked if tokens are valid: true, expires at: 1757795778368
+[debug] [2025-09-13T19:58:26.127Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/swapdotz:testIamPermissions [none]
+[debug] [2025-09-13T19:58:26.127Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/swapdotz:testIamPermissions x-goog-quota-user=projects/swapdotz
+[debug] [2025-09-13T19:58:26.128Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/swapdotz:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-09-13T19:58:27.204Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/swapdotz:testIamPermissions 200
+[debug] [2025-09-13T19:58:27.205Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/swapdotz:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-09-13T19:58:27.205Z] Checked if tokens are valid: true, expires at: 1757795778368
+[debug] [2025-09-13T19:58:27.206Z] Checked if tokens are valid: true, expires at: 1757795778368
+[debug] [2025-09-13T19:58:27.206Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/swapdotz/serviceAccounts/swapdotz@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-09-13T19:58:27.206Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/swapdotz/serviceAccounts/swapdotz@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-09-13T19:58:28.535Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/swapdotz/serviceAccounts/swapdotz@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-09-13T19:58:28.535Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/swapdotz/serviceAccounts/swapdotz@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'swapdotz'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[debug] [2025-09-13T19:58:34.206Z] Error: Timed out.
+    at Timeout._onTimeout (C:\Users\tasne\AppData\Roaming\npm\node_modules\firebase-tools\lib\utils.js:275:49)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+[error] 
+[error] Error: An unexpected error has occurred.

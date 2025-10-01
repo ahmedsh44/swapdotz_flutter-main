@@ -1,0 +1,73 @@
+name: swapdotz_flutter
+description: A new Flutter project.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.19.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  
+  # NFC
+  flutter_nfc_kit: ^3.6.0
+  
+  # Crypto & Security
+  dart_des: ^1.0.2
+  pointycastle: ^3.7.3
+  crypto: ^3.0.2
+  flutter_secure_storage: ^9.0.0
+  hex: ^0.2.0
+  
+  # Firebase
+  firebase_core: ^2.24.1
+  firebase_auth: ^4.17.1
+  cloud_firestore: ^4.8.4
+  cloud_functions: ^4.6.2
+
+  # Location & permissions
+  geolocator: ^11.0.1
+  permission_handler: ^11.0.1
+
+  # Payment processing
+  flutter_stripe: ^10.2.0
+  pay: 3.2.1
+  freezed_annotation: ^2.4.1
+
+  # Audio & Video
+  audioplayers: ^5.2.1
+  video_player: ^2.8.2
+
+  # Other
+  package_info_plus: ^4.2.0
+  url_launcher: ^6.1.11
+  device_info_plus: ^9.0.3
+  local_auth: ^2.1.7
+  shared_preferences: ^2.2.2
+  
+  # Image handling - CORRECTED VERSIONS
+  image_picker: ^1.0.4
+  image_cropper: ^5.0.0  # ✅ This version exists
+  flutter_image_compress: ^1.1.0
+  firebase_storage: ^11.2.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.7
+  freezed: ^2.4.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - swapdotz_possible_logo_no_bg.png
+    - assets/marketplace_images/
+    - assets/marketplace_images/inspired_by_legends/
+    - assets/marketplace_images/fantasy_brands/
+    - assets/marketplace_images/regular/
+    - assets/sounds/
+    - assets/SwapSounds/
