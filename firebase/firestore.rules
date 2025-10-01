@@ -1,0 +1,185 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthed() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Helper to fetch the owner of a token doc
+    function tokenOwner(tokenId) {
+      return get(/databases/$(database)/documents/tokens/$(tokenId)).data.ownerUid;
+    }
+
+    function tokenExists(tokenId) {
+      return exists(/databases/$(database)/documents/tokens/$(tokenId));
+    }
+    
+    // Helper to check if a pending transfer exists for this token
+    function hasPendingTransfer(tokenId) {
+      return exists(/databases/$(database)/documents/pendingTransfers/$(tokenId));
+    }
+
+    match /tokens/{tokenId} {
+      // SECURITY: Restricted read access - only owners, previous owners, admins, and users attempting transfers
+      allow read: if isAuthed() && (
+        resource.data.ownerUid == request.auth.uid ||           // Current owner can read
+        resource.data.current_owner_id == request.auth.uid ||   // Legacy field support
+        resource.data.previous_owners.hasAny([request.auth.uid]) ||  // Previous owners can read
+        request.auth.token.admin == true ||                     // Admins can read all
+        hasPendingTransfer(tokenId)                            // Anyone can read if there's a pending transfer
+      );
+      allow create, update, delete: if false;  // All writes via Cloud Functions only
+    }
+
+    match /pendingTransfers/{tokenId} {
+      // Only current owner can CREATE a single OPEN pending per token.
+      allow create: if isAuthed()
+        && tokenExists(tokenId)
+        && tokenOwner(tokenId) == request.auth.uid
+        && !exists(/databases/$(database)/documents/pendingTransfers/$(tokenId));
+
+      // Clients cannot update/delete pending; server-only via CFs
+      allow update, delete: if false;
+
+      // Reads allowed to authed users for UX (e.g., show "pending" banners)
+      allow read: if isAuthed();
+    }
+
+    // Allow read access to events for audit trails
+    match /events/{eventId} {
+      allow read: if isAuthed();
+      allow write: if false; // Only Cloud Functions can write events
+    }
+
+    // Admin management collections
+    match /admin_logs/{logId} {
+      allow read: if isAuthed() && request.auth.token.admin == true;
+      allow write: if false; // Only Cloud Functions
+    }
+
+    match /admins/{adminId} {
+      allow read: if isAuthed() && request.auth.token.admin == true;
+      allow write: if false; // Only Cloud Functions
+    }
+
+    match /command_queue_logs/{logId} {
+      allow read: if isAuthed() && request.auth.token.admin == true;
+      allow write: if false; // Only Cloud Functions
+    }
+
+    match /version_update_logs/{logId} {
+      allow read: if isAuthed() && request.auth.token.admin == true;
+      allow write: if false; // Only Cloud Functions
+    }
+
+    match /config/{configId} {
+      allow read: if isAuthed();
+      allow write: if false; // Only Cloud Functions
+    }
+
+    // Legacy rules for existing collections (maintain backward compatibility)
+    match /transfer_sessions/{sessionId} {
+      allow read: if isAuthed();
+      allow write: if false; // Only Cloud Functions
+    }
+
+    match /transfer_logs/{logId} {
+      allow read: if isAuthed();
+      allow write: if false; // Only Cloud Functions
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthed();
+      allow update: if isAuthed() && request.auth.uid == userId
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['uid', 'stats']);
+      allow create: if false; // Only Cloud Functions
+    }
+
+    // Marketplace Collections - PUBLIC READ ACCESS
+    match /marketplace_listings/{listingId} {
+      allow read: if true; // Public read for browsing - NO AUTH REQUIRED
+      allow create: if isAuthed() && request.auth.uid == request.resource.data.sellerId;
+      allow update: if isAuthed() && request.auth.uid == resource.data.sellerId;
+      allow delete: if false; // Use status updates instead
+    }
+
+    // Main listings collection (used by the app)
+    match /listings/{listingId} {
+      allow read: if true; // Public read for browsing
+      allow create: if isAuthed() && request.auth.uid == request.resource.data.seller_id;
+      allow update: if isAuthed() && 
+        request.auth.uid == resource.data.seller_id &&
+        (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['seller_id', 'created_at']));
+      allow delete: if isAuthed() && request.auth.uid == resource.data.seller_id;
+    }
+
+    // Offers collection
+    match /offers/{offerId} {
+      allow read: if isAuthed() && (
+        request.auth.uid == resource.data.buyer_id ||
+        request.auth.uid == resource.data.seller_id
+      );
+      allow create: if isAuthed() && request.auth.uid == request.resource.data.buyer_id;
+      allow update: if isAuthed() && (
+        request.auth.uid == resource.data.buyer_id ||
+        request.auth.uid == resource.data.seller_id
+      );
+      allow delete: if false;
+    }
+
+    match /marketplace_offers/{offerId} {
+      allow read: if isAuthed() && (
+        request.auth.uid == resource.data.buyerId ||
+        request.auth.uid == get(/databases/$(database)/documents/marketplace_listings/$(resource.data.listingId)).data.sellerId
+      );
+      allow create: if isAuthed() && request.auth.uid == resource.data.buyerId;
+      allow update: if false; // Cloud Functions only for status changes
+      allow delete: if false;
+    }
+
+    match /marketplace_transactions/{transactionId} {
+      allow read: if isAuthed() && (
+        request.auth.uid == resource.data.buyerId ||
+        request.auth.uid == resource.data.sellerId
+      );
+      allow create, update, delete: if false; // Cloud Functions only
+    }
+
+    match /marketplace_profiles/{userId} {
+      allow read: if true; // Public read for marketplace browsing
+      allow write: if isAuthed() && userId == request.auth.uid;
+    }
+
+    match /user_favorites/{userId} {
+      allow read, write: if isAuthed() && userId == request.auth.uid;
+    }
+
+    // Seller verification sessions
+    match /seller_verification_sessions/{sessionId} {
+      allow read: if isAuthed() && 
+        (request.auth.uid == resource.data.seller_id || 
+         request.auth.uid == resource.data.buyer_id ||
+         isAdmin());
+      allow create, update, delete: if false; // Cloud Functions only
+    }
+
+    // Payment intents for Stripe
+    match /payment_intents/{intentId} {
+      allow read: if isAuthed() && (
+        request.auth.uid == resource.data.buyer_id ||
+        request.auth.uid == resource.data.seller_id
+      );
+      allow create, update, delete: if false; // Cloud Functions only
+    }
+
+    // Default deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 

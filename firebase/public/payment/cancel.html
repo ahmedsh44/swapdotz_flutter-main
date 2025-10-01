@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Cancelled</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+        }
+        .cancel-icon {
+            width: 80px;
+            height: 80px;
+            background: #fc8181;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .x-mark {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+        }
+        h1 { color: #2d3748; margin-bottom: 10px; }
+        p { color: #718096; margin-bottom: 30px; }
+        .info-text {
+            background: #fff5f5;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #742a2a;
+            font-size: 14px;
+        }
+        .button {
+            background: #f5576c;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        .button:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cancel-icon">
+            <svg class="x-mark" viewBox="0 0 52 52">
+                <path d="M16 16l20 20M36 16l-20 20"/>
+            </svg>
+        </div>
+        <h1>Payment Cancelled</h1>
+        <p>Your payment was cancelled. No charges were made to your account.</p>
+        <div class="info-text">
+            • No payment was processed<br>
+            • The item is still available<br>
+            • You can try again from the app
+        </div>
+        <button class="button" onclick="window.close(); setTimeout(() => { window.location.href = '/'; }, 100);">
+            Close This Window
+        </button>
+        <script>
+            // Try to close the window after 3 seconds
+            setTimeout(() => {
+                try {
+                    window.close();
+                    // If close doesn't work, try to go back
+                    setTimeout(() => {
+                        if (!window.closed) {
+                            window.history.back();
+                        }
+                    }, 500);
+                } catch (e) {
+                    console.log('Cannot auto-close window');
+                }
+            }, 3000);
+        </script>
+    </div>
+</body>
+</html>

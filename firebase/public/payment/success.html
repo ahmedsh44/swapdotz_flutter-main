@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Successful</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+        }
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #48bb78;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .checkmark {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 100;
+            animation: draw 0.5s ease-in-out;
+        }
+        @keyframes draw {
+            from { stroke-dashoffset: 100; }
+            to { stroke-dashoffset: 0; }
+        }
+        h1 { color: #2d3748; margin-bottom: 10px; }
+        p { color: #718096; margin-bottom: 30px; }
+        .info-text {
+            background: #f7fafc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #4a5568;
+            font-size: 14px;
+        }
+        .button {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        .button:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">
+            <svg class="checkmark" viewBox="0 0 52 52">
+                <path d="M14 27l7 7 16-16"/>
+            </svg>
+        </div>
+        <h1>Payment Successful!</h1>
+        <p>Your payment has been processed successfully. The seller will be notified to ship your item.</p>
+        <div class="info-text">
+            <strong>What's next?</strong><br>
+            • The seller has been notified<br>
+            • You'll receive updates when your item ships<br>
+            • Check "My Purchases" in the app for details
+        </div>
+        <button class="button" onclick="window.close(); setTimeout(() => { window.location.href = '/'; }, 100);">
+            Close This Window
+        </button>
+        <script>
+            // Try to close the window after 5 seconds
+            setTimeout(() => {
+                try {
+                    window.close();
+                    // If close doesn't work, try to go back
+                    setTimeout(() => {
+                        if (!window.closed) {
+                            window.history.back();
+                        }
+                    }, 500);
+                } catch (e) {
+                    console.log('Cannot auto-close window');
+                }
+            }, 5000);
+        </script>
+    </div>
+</body>
+</html>
